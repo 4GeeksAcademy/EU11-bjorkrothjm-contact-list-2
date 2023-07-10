@@ -9,7 +9,10 @@ export const Navbar = () => {
 				<Link to="/demo">
 					<button className="btn btn-success">Demo</button>
 				</Link>
-				<Link className="navbar-btn-right" to="/single" style={{margin: "10px 0px"}}>
+				<Link className="navbar-btn-right" to="/single/0" style={{margin: "10px 0px"}}>
+					<button className="btn btn-success">Check the Context in action</button>
+				</Link>
+				<Link className="navbar-btn-right" to="/new-contact/0" style={{margin: "10px 0px"}}>
 					<button className="btn btn-success">Check the Context in action</button>
 				</Link>
 		</nav>
