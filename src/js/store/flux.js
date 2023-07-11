@@ -82,18 +82,77 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}				
 			},
 
-			deleteContact: (event) => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-				console.log(event.key)
+			deleteContact: async (contactId) => {
+				const store = getStore();
+				const actions = getActions(); 
+		
+				console.log("Delting contact: ", contactId)
+				const deleteContactUrl = baseUrl+contactId
+				try {
+					const response = await fetch(deleteContactUrl, {
+						method: "DELETE",
+					});
+					if (!response.ok){
+						console.log(response.ok);
+					}else{
+						actions.getContacts();
+					}
+
+				}catch(error){
+					console.log(error);
+				}
+
 			},
 
-			updateContact: () => {
+			updateContact: async (contactId, contactData) => {
+				const store = getStore();
+				const actions = getActions(); 
+		
+				console.log("Delting contact: ", contactId)
+				const updateContactUrl = baseUrl+contactId
+				try {
+					const response = await fetch(updateContactUrl, {
+						method: "PUT",
+						body: JSON.stringify(contactData), // convert data to a string to send it over HTTP !!! initalize contactData
+                    	headers: {
+                        	"Content-Type": "application/json"
+                        }
+					});
+					if (!response.ok){
+						console.log(response.ok);
+					}else{
+						actions.getContacts();
+					}
+
+				}catch(error){
+					console.log(error);
+				}
+
+			},
+
+			getParticularContact: async (contactId) => {
+				const store = getStore();
+				const getParticularContactUrl = baseUrl+contactId
+				
+				try{
+					const response = await fetch(getParticularContactUrl);
+					if (!response.ok){
+						console.log(response.ok)
+					}else{
+						const contactData = await response.json();
+						console.log(contactData);
+						return(contactData);
+					}
+				}catch(error){
+					console.log(error);
+				}
+
+
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
 			},
+
 
 
 
