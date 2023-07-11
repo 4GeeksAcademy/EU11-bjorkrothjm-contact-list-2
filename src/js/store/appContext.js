@@ -32,7 +32,7 @@ const injectContext = PassedComponent => {
 			 *
 			 **/
 
-			//state.actions.getContacts();
+			state.actions.getContacts();
 
 		}, []);
 

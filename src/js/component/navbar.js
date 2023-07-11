@@ -13,7 +13,7 @@ export const Navbar = () => {
 					<button className="btn btn-success">Check the Context in action</button>
 				</Link>
 				<Link className="navbar-btn-right" to="/new-contact/0" style={{margin: "10px 0px"}}>
-					<button className="btn btn-success">Check the Context in action</button>
+					<button className="btn btn-success">Add new contact</button>
 				</Link>
 		</nav>
 	);

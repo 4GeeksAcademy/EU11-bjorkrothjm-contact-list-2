@@ -16,6 +16,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
+			agendaSlug: [
+				"joshi_secret_agenda_2023"
+			],
 			contacts: [
 				{
 					full_name : "Dave Bradley",
@@ -36,37 +39,54 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 
 			getContacts: async () => {
+				const store = getStore();
+				const getContactsUrl = baseUrl+"/agenda/"+store.agendaSlug[0] // UPDATE
 				
-				const getContactsUrl = baseUrl+"/agenda/{agenda_slug}" // UPDATE
 				try{
 					const response = await fetch(getContactsUrl);
 					if (!response.ok){
 						console.log(response.ok)
 					}else{
-						const jsonData = await response.json();
-						console.log(jsonData)
-						setStore({ contacts: jsonData });
+						const agendaData = await response.json();
+						console.log(agendaData)
+						setStore({...store, contacts: agendaData });
 					}
 				}catch(error){
 					console.log(error);
 				}
 
-
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
 			},
 
-			addNewContact: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
+			addNewContact: async (contactData) => {
+				const store = getStore();
+
+				try{
+					const response = await fetch(baseUrl, {
+						method: "POST",
+                    	body: JSON.stringify(contactData), // convert data to a string to send it over HTTP !!! initalize contactData
+                    	headers: {
+                        	"Content-Type": "application/json"
+                        }
+					})
+					if (!response.ok){
+						console.log(response.ok)
+					}else{
+						const jsonData = await response.json();
+						console.log("jsonData: ", jsonData)
+						const newContactsArray = [...store.contacts, jsonData ]
+						setStore({...store, contacts: newContactsArray});
+					}
+
+				}catch(error){
+					console.log(error);
+				}				
 			},
 
-			deleteContact: () => {
+			deleteContact: (event) => {
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
+				console.log(event.key)
 			},
 
 			updateContact: () => {
