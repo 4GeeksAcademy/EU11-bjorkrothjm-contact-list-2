@@ -25,14 +25,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					email : "dave@gmail.com",
 					agenda_slug : "my_super_agenda",
 					address :"47568 NW 34ST, 33434 FL, USA",
-					phone :"7864445566"
-				},
-				{
-					full_name : "Dave Bradley",
-					email : "dave@gmail.com",
-					agenda_slug : "my_super_agenda",
-					address :"47568 NW 34ST, 33434 FL, USA",
-					phone :"7864445566"
+					phone :"7864445566",
+					id : 0
 				}
 			]
 		},
@@ -48,8 +42,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log(response.ok)
 					}else{
 						const agendaData = await response.json();
-						console.log(agendaData)
-						setStore({...store, contacts: agendaData });
+						console.log("agendaData", agendaData)
+						if (agendaData.length > 0){
+							setStore({...store, contacts: agendaData });
+						}
+					
 					}
 				}catch(error){
 					console.log(error);
@@ -63,7 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try{
 					const response = await fetch(baseUrl, {
 						method: "POST",
-                    	body: JSON.stringify(contactData), // convert data to a string to send it over HTTP !!! initalize contactData
+                    	body: JSON.stringify(contactData), // convert data to a string to send it over HTTP
                     	headers: {
                         	"Content-Type": "application/json"
                         }
@@ -104,16 +101,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			updateContact: async (contactId, contactData) => {
+			updateContact: async (contactData) => {
 				const store = getStore();
 				const actions = getActions(); 
 		
-				console.log("Delting contact: ", contactId)
-				const updateContactUrl = baseUrl+contactId
+				console.log("Updating contact: ", contactData.id)
+				const updateContactUrl = baseUrl+contactData.id
 				try {
 					const response = await fetch(updateContactUrl, {
 						method: "PUT",
-						body: JSON.stringify(contactData), // convert data to a string to send it over HTTP !!! initalize contactData
+						body: JSON.stringify(contactData), // convert data to a string to send it over HTTP !!!
                     	headers: {
                         	"Content-Type": "application/json"
                         }
