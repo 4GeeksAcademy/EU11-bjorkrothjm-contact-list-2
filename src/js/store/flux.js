@@ -20,14 +20,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				"joshi_secret_agenda_2023"
 			],
 			contacts: [
-				{
-					full_name : "Dave Bradley",
-					email : "dave@gmail.com",
-					agenda_slug : "my_super_agenda",
-					address :"47568 NW 34ST, 33434 FL, USA",
-					phone :"7864445566",
-					id : 0
-				}
+				// {
+				// 	full_name : "Dave Bradley",
+				// 	email : "dave@gmail.com",
+				// 	agenda_slug : "my_super_agenda",
+				// 	address :"47568 NW 34ST, 33434 FL, USA",
+				// 	phone :"7864445566",
+				// 	id : 0
+				// }
 			]
 		},
 		actions: {
@@ -43,9 +43,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}else{
 						const agendaData = await response.json();
 						console.log("agendaData", agendaData)
-						if (agendaData.length > 0){
-							setStore({...store, contacts: agendaData });
-						}
+						// if (agendaData.length > 0){
+						// 	setStore({...store, contacts: agendaData });
+						// }
+						setStore({...store, contacts: agendaData });
 					
 					}
 				}catch(error){
@@ -85,6 +86,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		
 				console.log("Delting contact: ", contactId)
 				const deleteContactUrl = baseUrl+contactId
+				console.log("deleteContactUrl", deleteContactUrl)
 				try {
 					const response = await fetch(deleteContactUrl, {
 						method: "DELETE",

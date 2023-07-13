@@ -9,6 +9,31 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 	const navigate = useNavigate();
 
+	const deleteModal = (itemId) => {
+		console.log("itemId", itemId)
+
+		return(
+		// Important "id" needs to match up with the data-bs-target (minus the #) in the button (need to import unique identifier like item.id for this)
+		<div className="modal fade" id={"modal"+itemId} tabIndex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+			<div className="modal-dialog">
+				<div className="modal-content">
+				<div className="modal-header">
+					<h1 className="modal-title fs-5" id="exampleModalLabel">Are you sure?</h1>
+					<button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div className="modal-body">
+					If you delete this thing the entire universe will go down!
+				</div>
+				<div className="modal-footer">
+					<button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Oh no!</button>
+					<button type="button" className="btn btn-primary" onClick={() => actions.deleteContact(itemId)} data-bs-dismiss="modal">Yes baby!</button>
+				</div>
+				</div>
+			</div>
+		</div>
+		)
+	} 
+
 	return(
 		<div>
 			<div className="d-flex justify-content-end mt-2 mb-2" style={{margin: "auto",width: "85%"}}>
@@ -60,16 +85,25 @@ export const Home = () => {
 									</button>
 								</div>
 								<div className="card-button-container">
-									<button className="card-button" onClick={() => actions.deleteContact(item.id)}>
+									<button className="card-button" data-bs-toggle="modal" data-bs-target={"#modal"+item.id} >
 										<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
 											<path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 										</svg>
 									</button>
+
+									{deleteModal(item.id)}
+
+									
+					
 								</div>
 							</div>
 	
 						</div>
+					
 					</div>
+
+
+
 			
 					); // Inner Return closing 
 
